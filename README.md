@@ -1,2 +1,2 @@
 # Software-Architecture
-:rchitecture Decision Records 
+architecture Decision Records 
