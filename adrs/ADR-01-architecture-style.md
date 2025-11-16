@@ -1,21 +1,30 @@
-# ADR-01 – Architecture Style: Modular Monolith
+# ADR-01 — Hybrid Monolithic Layered Architecture with Limited Microservices
 
 **Status:** Accepted  
-**Date:** 2025-11-08
+**Date:** 2025-11-XX  
 
 ## Context
-We must deliver a coherent CMS design and PoC quickly, while maintaining separation of concerns and tenant isolation.
+The Complaint Management System (CMS) must support multiple user roles (Consumers, Agents, Engineers, Managers, Admins), multi-tenancy, extensibility, and a clear “golden thread” from architectural design through to a working proof-of-concept. The system requires maintainability, scalability, and secure tenant isolation, but must also remain achievable within coursework timescales.
 
 ## Decision
-Adopt a **modular monolith**: clear modules (Complaint, Workflow, Notification, Auth) behind a single Laravel app/API.
-
-## Alternatives
-- Microservices now (higher infra/ops overhead, complexity).
-- Layered monolith with weak boundaries (risk of tight coupling).
+Adopt a **Hybrid Monolithic Layered Architecture**:  
+- The **core CMS** is a **Layered Monolith** (HTML/JS → PHP → Domain Modules → MySQL).  
+- Two high-change components — **Notification Service** and **Reporting Service** — are implemented as **independent microservices** communicating with the monolith via REST APIs.
 
 ## Consequences
-✅ Simple deployment and testing; fewer moving parts.  
-⚠️ We must enforce module boundaries via folder structure, service/repository layers, and code review.
+**Positive:**  
+- Clear separation of concerns within the monolith (Presentation, Application, Domain, Data).  
+- High-change modules can be deployed, scaled, and updated independently.  
+- Less operational complexity than full microservices.  
+- Ideal for evolving over time (“monolith-first then extract”).  
 
-## Follow-ups
-Document module boundaries in the repo and reflect them in C4 L3/L4.
+**Negative:**  
+- Some complexity added by managing two auxiliary services.  
+- Still need careful boundaries inside the monolith to avoid tight coupling.
+
+## Alternatives Considered
+- **Pure Monolithic Layered Architecture:** simple but less scalable and harder to evolve.  
+- **Full Microservices Architecture:** highly scalable but too complex for proof-of-concept scope.
+
+## References
+§2.1 Architectural Style; C4 L1 & L2; ADR-02..05
