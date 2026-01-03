@@ -1,19 +1,17 @@
-# ADR 001:Architecture Style
+# ADR-001: Use of Layered Monolithic Architecture
 
 ## Status
 Accepted
 
 ## Context
-The CMS must support millions of users, multiple organisations, and future features such as chatbot integration. The system also needs to remain manageable for the Proof of Concept.
+The Complaint Management System (CMS) is being developed as a proof of concept with limited time and scope. The system must be easy to understand, implement, and demonstrate, while still supporting future scalability.
 
 ## Decision
-Adopt a **hybrid architecture**: a layered monolith for core logic, supported by two independent microservices (Notifications and Reporting).
+A layered monolithic architecture was chosen, separating the system into presentation, application, and data layers.
 
-## Alternatives
-- **Full Monolith** – simple, but limits long-term scalability and extension.
-- **Full Microservices** – scalable, but too complex for early development, increases operational overhead.
+## Alternatives Considered
+- Microservices architecture: Rejected due to added complexity and deployment overhead for a proof of concept.
+- Serverless architecture: Rejected due to reduced control over application flow and increased architectural complexity.
 
 ## Consequences
-- Core system remains simple and maintainable.
-- High-load features can scale independently.
-- Architecture remains flexible for future features.
+The system is simpler to develop and test, with clear separation of concerns. While less scalable than microservices, it is suitable for a proof of concept and can be refactored in the future.
